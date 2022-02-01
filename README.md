@@ -61,6 +61,7 @@ WORKDIR $MYAPP_HOME
 COPY backend-api/pom.xml .
 COPY backend-api/src ./src
 # Packaging du projet sans les tests
+CMD mvn dependency:go-offline
 RUN mvn package -DskipTests
 
 # Run
@@ -74,3 +75,20 @@ COPY --from=myapp-build $MYAPP_HOME/target/*.jar $MYAPP_HOME/myapp.jar
 # Exécution du package .jar pour lancer le backend
 ENTRYPOINT java -jar myapp.jar
 ```
+
+## HttpServer
+### Port 4200:80
+Build :
+>docker build -t yohanp/httpserver .
+
+Run :
+>docker run -d -p 4200:80 --network=app-network --name=httpserver yohanp/httpserver
+
+Dockerfile :
+```dockerfile
+FROM httpd:2.4
+COPY index.html /usr/local/apache2/htdocs/
+```
+
+modifier configuration : 
+>docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf
