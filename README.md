@@ -16,7 +16,7 @@ Network :
 >docker network create app-network
 
 Run database : 
->docker run -d -p 5432:5432 -v /temp/data:/var/lib/postgresql/data --network=app-network --name=database yohanp/database
+>docker run -d -v /temp/data:/var/lib/postgresql/data --network=app-network --name=database yohanp/database
 
 Run adminer : 
 >docker run -d -p 8081:8080 --network=app-network --name=adminer adminer
@@ -38,7 +38,7 @@ Build :
 >docker build -t yohanp/backend .
 
 Run :
->docker run -d -p 8080:8080 --network=app-network --name=backend yohanp/backend
+>docker run -d --network=app-network --name=backend yohanp/backend
 
 Dockerfile :
 ```dockerfile
@@ -77,18 +77,19 @@ ENTRYPOINT java -jar myapp.jar
 ```
 
 ## HttpServer
-### Port 4200:80
+### Port 80:80
 Build :
 >docker build -t yohanp/httpserver .
 
 Run :
->docker run -d -p 4200:80 --network=app-network --name=httpserver yohanp/httpserver
+>docker run -d -p 80:80 --network=app-network --name=httpserver yohanp/httpserver
 
 Dockerfile :
 ```dockerfile
 FROM httpd:2.4
 COPY index.html /usr/local/apache2/htdocs/
+COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
 ```
 
-modifier configuration : 
+modifier la configuration : 
 >docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf
