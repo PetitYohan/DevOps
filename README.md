@@ -93,3 +93,35 @@ COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
 
 modifier la configuration : 
 >docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf
+
+## Docker-compose
+
+Commande : 
+>docker-compose up
+
+docker-compose.yml :
+```yml
+version: '3.7'
+services:
+  backend:
+    build: ./Backend
+    networks: 
+      - app-network
+    depends_on:
+      - database
+  database:
+    build: ./Database
+    networks:
+      - app-network
+  httpd:
+    build: ./HttpServer
+    ports: 
+      - "80:80"
+    networks:
+      - app-network
+    depends_on: 
+      - database
+      - backend
+networks:
+  app-network:
+```
