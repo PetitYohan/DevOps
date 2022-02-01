@@ -1,5 +1,5 @@
-# TP01 - Docker
 ### Par Yohan Petit - 4IRC
+# TP01 - Docker
 
 _newgrp docker => pour lancer docker sur session CPE_
 
@@ -96,12 +96,16 @@ modifier la configuration :
 
 ## Docker-compose
 
-Commande : 
+1-3 Document docker-compose most important commands
+Pour lancer
 >docker-compose up
 
-docker-compose.yml :
+Pour builder
+>docker-compose build
+
+1-4 Document your docker-compose file :
 ```yml
-version: '3.7'
+version: '3.3'
 services:
   backend:
     build: ./Backend
@@ -125,3 +129,21 @@ services:
 networks:
   app-network:
 ```
+
+## Docker hub publish
+1-5 Document your publication commands and published images in dockerhub:
+
+Déclaration :
+>docker tag tp1_httpd yosmall/tp1_httpd:1.0
+
+Publication :
+>docker push yosmall/tp1_httpd:1.0
+
+La base de donnée, l'api java ansi que le serveur http ont été publiés sur docker hub à l'aide des commandes ci-dessus
+
+Possibilité d'executer les commandes docker sur le docker-compose en spécifiant un service comme les logs, start, stop, restart, etc ...
+
+# TP02 - CI/CD-GITHUB-ACTIONS
+## First steps into the CI world
+2-1 What are testcontainers?
+>Testcontainer est une librairie java qui permet d'instancier dans des containers des systèmes.
