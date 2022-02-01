@@ -187,6 +187,7 @@ on:
   push:
     branches: [master]
   pull_request:
+#Ajout de la variable d'environement
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -205,6 +206,7 @@ jobs:
           distribution: 'adopt'
       #finally build your app with the latest command
       - name: Build and test with Maven
+        #Ajout des tests sonar (désactiver le test automatique du projet dans sonar)
         run: mvn -B verify sonar:sonar -Dsonar.projectKey=PetitYohan_DevOps -Dsonar.organization=petityohan -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN }} --file ./TP1/Backend/simple-api/pom.xml
 
   # define job to build and publish docker image
