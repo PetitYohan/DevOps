@@ -147,3 +147,35 @@ Possibilité d'executer les commandes docker sur le docker-compose en spécifian
 ## First steps into the CI world
 2-1 What are testcontainers?
 >Testcontainer est une librairie java qui permet d'instancier dans des containers des systèmes.
+
+2-2 Document your Github Actions configurations:
+```yml
+name: CI devops 2022 CPE
+on:
+  #to begin you want to launch this job in main and develop
+  push:
+    # Choit de la branch git
+    branches: [master]
+  pull_request:
+
+
+jobs:
+  test-backend:
+    # Choit de l'OS
+    runs-on: ubuntu-18.04
+    steps:
+      #checkout your github code using actions/checkout@v2.3.3
+      - uses: actions/checkout@v2.3.3
+      #do the same with another action (actions/setup-java@v2) that enable to setup jdk 11
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          #Choit de la version de java
+          java-version: 11
+          #Choit de la distribution du djk
+          distribution: 'adopt'
+      #finally build your app with the latest command
+      - name: Build and test with Maven
+        #Exécution des tests sur le projet maven
+        run: mvn clean verify --file ./TP1/Backend/simple-api/pom.xml
+```
