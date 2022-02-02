@@ -1,0 +1,8 @@
+---
+# tasks file for roles/app
+- name: Run Backend
+  docker_container:
+    name: backend
+    image: yosmall/tp1_backend:1.0
+    networks :
+      name : app-network

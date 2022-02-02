@@ -253,3 +253,81 @@ jobs:
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/master' }}
 ```
+
+# TP03 - Ansible
+## Inventories
+3-1 Document your inventory and base commands
+setup.yml:
+```yml
+all:
+  vars:
+    ansible_user: centos
+    ansible_ssh_private_key_file: ../ansible/id_rsa
+  children:
+    prod:
+      hosts: centos@yohan.petit.takima.cloud
+```
+
+Commande Ansible:
+
+Connection ssh:
+>ssh -i Ansible/id_rsa centos@yohan.petit.takima.cloud
+
+Ping:
+>ansible all -m ping -i inventory.yml
+
+Installation d'Apache:
+>ansible all -m yum -a “name=httpd state=present” --become -i inventory.yml
+
+Créer d'une page html:
+>ansible all -m shell -a 'echo `<html><h1>Hello le monde</h1></html>` >> /var/www/html/index.html' --become -i inventory.yml
+
+Démarrer Apache:
+>ansible all -m service -a "name=httpd state=started" --become -i inventory.yml
+
+## Playbooks
+3-2 Document your playbook
+playbook.yml:
+```yml
+- hosts: all
+  gather_facts: false
+  become: true
+
+  roles:
+    - docker
+```
+
+roles/docker/tasks/main.yml:
+```yml
+---
+# tasks file for roles/docker
+  - name: Clean packages
+    command:
+      cmd: dnf clean -y packages
+  - name: Install device-mapper-persistent-data
+    dnf:
+      name: device-mapper-persistent-data
+      state: latest
+  - name: Install lvm2
+    dnf:
+      name: lvm2
+      state: latest
+  - name: add repo docker
+    command:
+      cmd: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+  - name: Install Docker
+    dnf:
+      name: docker-ce
+      state: present
+  - name: install python3
+    dnf:
+      name: python3
+  - name: Pip install
+    pip:
+      name: docker
+  - name: Make sure Docker is running
+    service: name=docker state=started
+    tags: docker
+```
+
+## Deploy your app
