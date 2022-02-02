@@ -19,5 +19,12 @@ services:
     depends_on: 
       - database
       - backend
+      - front
+  front:
+    build: ./devops-front-main
+    networks:
+      - app-network
+    depends_on: 
+      - backend
 networks:
   app-network:
