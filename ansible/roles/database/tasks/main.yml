@@ -3,6 +3,6 @@
 - name: Run Database
   docker_container:
     name: database
-    image: yosmall/tp1_database
+    image: yosmall/tp1-database
     networks :
       - name: app-network

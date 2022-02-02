@@ -271,7 +271,7 @@ all:
 Commande Ansible:
 
 Connection ssh:
->ssh -i Ansible/id_rsa centos@yohan.petit.takima.cloud
+>ssh -i id_rsa centos@yohan.petit.takima.cloud
 
 Ping:
 >ansible all -m ping -i inventory.yml
@@ -331,6 +331,10 @@ roles/docker/tasks/main.yml:
 ```
 
 ## Deploy your app
+
+Créer role:
+>ansible-galaxy init roles/<nom_role>
+
 3-3 Document your docker_container tasks configuration:
 playbook.yml:
 ```yml

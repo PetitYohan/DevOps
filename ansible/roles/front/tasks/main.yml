@@ -3,6 +3,6 @@
 - name: Run Front
   docker_container:
     name: front
-    image: yosmall/tp1_front
+    image: yosmall/tp1-front
     networks :
       - name: app-network
