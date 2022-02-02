@@ -3,7 +3,7 @@
 - name: Run HTTPD
   docker_container:
     name: httpd
-    image: yosmall/tp1_httpd:1.0
+    image: yosmall/tp1_httpd
     ports: 
       - "80:80"
     networks:

@@ -1,8 +1,8 @@
 ---
 # tasks file for roles/database
-- name: Run Database
+- name: Run Front
   docker_container:
-    name: database
-    image: yosmall/tp1_database
+    name: front
+    image: yosmall/tp1_front
     networks :
       - name: app-network
