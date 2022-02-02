@@ -5,4 +5,4 @@
     name: backend
     image: yosmall/tp1_backend:1.0
     networks :
-      name : app-network
+      - name: app-network

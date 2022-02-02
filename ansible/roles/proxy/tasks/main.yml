@@ -4,5 +4,7 @@
   docker_container:
     name: httpd
     image: yosmall/tp1_httpd:1.0
-    networks :
-      name : app-network
+    ports: 
+      - "80:80"
+    networks:
+      - name: app-network

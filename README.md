@@ -331,3 +331,63 @@ roles/docker/tasks/main.yml:
 ```
 
 ## Deploy your app
+3-3 Document your docker_container tasks configuration:
+playbook.yml:
+```yml
+- hosts: all
+  gather_facts: false
+  become: true
+
+  roles:
+    - docker
+    - network
+    - database
+    - app
+    - proxy
+```
+roles/database/tasks/main.yml:
+```yml
+---
+# tasks file for roles/database
+- name: Run Database
+  docker_container:
+    name: database
+    image: yosmall/tp1_database:1.0
+    networks :
+      - name: app-network
+```
+
+roles/app/tasks/main.yml:
+```yml
+---
+# tasks file for roles/app
+- name: Run Backend
+  docker_container:
+    name: backend
+    image: yosmall/tp1_backend:1.0
+    networks :
+      - name: app-network
+```
+
+roles/proxy/tasks/main.yml:
+```yml
+---
+# tasks file for roles/proxy
+- name: Run HTTPD
+  docker_container:
+    name: httpd
+    image: yosmall/tp1_httpd:1.0
+    ports: 
+      - "80:80"
+    networks:
+      - name: app-network
+```
+
+roles/network/tasks/main.yml:
+```yml
+---
+# tasks file for roles/network
+- name: add network
+  docker_network:
+    name: app-network
+```

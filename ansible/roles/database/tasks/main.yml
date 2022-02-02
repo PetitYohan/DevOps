@@ -5,4 +5,4 @@
     name: database
     image: yosmall/tp1_database:1.0
     networks :
-      name : app-network
+      - name: app-network
